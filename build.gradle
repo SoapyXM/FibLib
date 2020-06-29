@@ -83,9 +83,9 @@ publishing {
 	repositories {
 		maven {
 			name = "GithubPackages"
-			url "https://maven.pkg.github.com/Hephaestus-Dev/FibLib"
+			url "https://maven.pkg.github.com/SoapyXM/FibLib"
 			credentials {
-				username = "Hephaestus-Dev"
+				username = "SoapyXM"
 				password = System.getenv("GITHUB_TOKEN")
 			}
 		}
