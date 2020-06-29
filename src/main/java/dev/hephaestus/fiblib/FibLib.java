@@ -43,6 +43,7 @@ public class FibLib implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		Blocks.initialize();
 		FibLib.log("Initialized");
 	}
 
@@ -50,7 +51,7 @@ public class FibLib implements ModInitializer {
 		public static final ComponentType<BlockTracker> TRACKER =
 				ComponentRegistry.INSTANCE.registerIfAbsent(new Identifier("fiblib:blocks.tracker"), BlockTracker.class);
 
-		static {
+		public static void initialize() {
 			ChunkComponentCallback.EVENT.register((chunk, components) -> components.put(TRACKER, new BlockTracker(chunk)));
 		}
 
