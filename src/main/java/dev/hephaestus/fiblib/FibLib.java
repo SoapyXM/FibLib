@@ -56,6 +56,7 @@ public class FibLib implements ModInitializer {
 				ComponentRegistry.INSTANCE.registerIfAbsent(new Identifier("fiblib:blocks.tracker"), BlockTracker.class);
 
 		public static void initialize() {
+			FibLib.log("Registering chunk component callback.");
 			ChunkComponentCallback.EVENT.register((chunk, components) -> components.put(TRACKER, new BlockTracker(chunk)));
 		}
 
