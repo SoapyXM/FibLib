@@ -4,7 +4,6 @@ import dev.hephaestus.fiblib.blocks.BlockFib;
 import dev.hephaestus.fiblib.blocks.BlockTracker;
 import dev.hephaestus.fiblib.blocks.LookupTable;
 import dev.hephaestus.fiblib.items.ItemFib;
-import dev.hephaestus.fiblib.items.TemplateItemFib;
 import nerdhub.cardinal.components.api.ComponentRegistry;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.event.ChunkComponentCallback;
@@ -12,7 +11,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
@@ -51,12 +49,6 @@ public class FibLib implements ModInitializer {
 	public void onInitialize() {
 		Blocks.initialize();
 		FibLib.log("Initialized");
-		Items.register(new TemplateItemFib(new ItemStack(net.minecraft.item.Items.APPLE), new ItemStack(net.minecraft.item.Items.DIAMOND)) {
-			@Override
-			public boolean condition(ServerPlayerEntity player) {
-				return true;
-			}
-		});
 	}
 
 	public static class Blocks {
