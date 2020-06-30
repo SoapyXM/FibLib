@@ -1,0 +1,3 @@
+accessWidener	v1	named
+
+accessible field net/minecraft/entity/ItemEntity STACK Lnet/minecraft/entity/data/TrackedData;

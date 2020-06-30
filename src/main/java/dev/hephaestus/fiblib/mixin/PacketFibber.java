@@ -1,4 +1,4 @@
-package dev.hephaestus.fiblib.mixin.blocks;
+package dev.hephaestus.fiblib.mixin;
 
 import dev.hephaestus.fiblib.Fibber;
 import io.netty.util.concurrent.Future;
@@ -22,7 +22,14 @@ public abstract class PacketFibber {
 
     @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
     public void fixPackets(Packet<?> packet, CallbackInfo ci) {
-        if (/*packet instanceof BlockActionS2CPacket ||*/ packet instanceof PlayerActionResponseS2CPacket || packet instanceof BlockUpdateS2CPacket || packet instanceof ChunkDeltaUpdateS2CPacket) {
+        if (
+                packet instanceof PlayerActionResponseS2CPacket ||
+                packet instanceof BlockUpdateS2CPacket ||
+                packet instanceof ChunkDeltaUpdateS2CPacket ||
+                packet instanceof InventoryS2CPacket ||
+                packet instanceof ScreenHandlerSlotUpdateS2CPacket ||
+                packet instanceof EntityTrackerUpdateS2CPacket
+        ) {
             Fibber.fix(packet, player);
             this.sendPacket(packet, null);
             ci.cancel();

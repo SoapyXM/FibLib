@@ -3,19 +3,25 @@ package dev.hephaestus.fiblib;
 import dev.hephaestus.fiblib.blocks.BlockFib;
 import dev.hephaestus.fiblib.blocks.BlockTracker;
 import dev.hephaestus.fiblib.blocks.LookupTable;
+import dev.hephaestus.fiblib.items.ItemFib;
+import dev.hephaestus.fiblib.items.TemplateItemFib;
 import nerdhub.cardinal.components.api.ComponentRegistry;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.event.ChunkComponentCallback;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class FibLib implements ModInitializer {
@@ -45,6 +51,12 @@ public class FibLib implements ModInitializer {
 	public void onInitialize() {
 		Blocks.initialize();
 		FibLib.log("Initialized");
+		Items.register(new TemplateItemFib(new ItemStack(net.minecraft.item.Items.APPLE), new ItemStack(net.minecraft.item.Items.DIAMOND)) {
+			@Override
+			public boolean condition(ServerPlayerEntity player) {
+				return true;
+			}
+		});
 	}
 
 	public static class Blocks {
@@ -100,6 +112,46 @@ public class FibLib implements ModInitializer {
 		 */
 		public static boolean contains(BlockState state) {
 			return FIBS.containsKey(state);
+		}
+	}
+
+	public static class Items {
+		public static final List<ItemFib> FIBS = new ArrayList<>();
+
+		/**
+		 * Registers a new item fib.
+		 * @param fib The fib to register.
+		 */
+		public static void register(ItemFib fib) {
+			FIBS.add(fib);
+		}
+
+		/**
+		 * Transforms an ItemStack to respect registered fibs.
+		 * @param stack The stack to transform
+		 * @param player The player to pass to the fib.
+		 * @return The transformed stack. Will be identical to the original stack if no fibs matched.
+		 */
+		public static ItemStack transform(ItemStack stack, ServerPlayerEntity player) {
+			ItemFib fib = get(stack, player);
+			if(fib == null)
+				return stack;
+			return fib.transform(player, stack);
+		}
+
+		/**
+		 * Gets an ItemFib matching a player and stack.
+		 * @param stack The stack to match against the registered fibs.
+		 * @param player The player being fibbed to.
+		 * @return The fib found, or null if a matching fib is not found.
+		 */
+		@Nullable
+		public static ItemFib get(ItemStack stack, ServerPlayerEntity player) {
+			for(ItemFib fib : FIBS) {
+				if(fib.matches(player, stack))
+					return fib;
+			}
+			return null;
 		}
 	}
 }

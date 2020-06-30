@@ -91,3 +91,7 @@ publishing {
 		}
 	}
 }
+
+minecraft {
+	accessWidener "src/main/resources/fiblib.accesswidener"
+}
