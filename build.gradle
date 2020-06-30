@@ -27,7 +27,9 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modImplementation "com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
+	include "com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"
 	modImplementation "com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-chunk:${project.cardinal_version}"
+	include "com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-chunk:${project.cardinal_version}"
 
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 
